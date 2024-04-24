@@ -221,3 +221,16 @@ java.lang.RuntimeException: The server did not start, got FailedToOpenBspConnect
 
 2024.04.24 19:38:05 INFO  no build target found for /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/build.sbt. Using presentation compiler with project's scala-library version: 3.3.3
 2024.04.24 19:38:07 INFO  time: code lens generation in 1.55s
+2024.04.24 20:08:00 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/capteur.scala
+2024.04.24 20:08:24 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/capteur.scala
+2024.04.24 20:10:31 WARN  no build target for: /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/capteur.scala
+2024.04.24 20:10:56 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation_de_data.scala
+2024.04.24 20:11:14 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation_de_data.scala
+2024.04.24 20:17:05 WARN  no build target for: /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/build.sbt
+2024.04.24 20:17:18 WARN  no build target for: /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation_de_data.scala
+2024.04.24 20:18:02 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/data/PopulationGenerator.scala
+2024.04.24 20:18:10 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/data/PopulationGenerator.scala
+2024.04.24 20:18:16 WARN  no build target for: /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/data/PopulationGenerator.scala
+2024.04.24 20:18:39 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/data/capteur.scala
+2024.04.24 20:18:45 WARN  Could not find semantic tokens for: file:///Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/data/capteur.scala
+2024.04.24 20:18:49 WARN  no build target for: /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/data/capteur.scala

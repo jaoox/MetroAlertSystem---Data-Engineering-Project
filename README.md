@@ -23,7 +23,6 @@ Gestion des Alertes : Développement d'un système robuste de gestion des alerte
 # Plan d'Action
 ## Conception des Capteurs :
 Déterminer les spécifications techniques des capteurs de poids.
-Sélectionner le fournisseur ou le partenaire pour la fabrication.
 ## Développement de l'Outil de Simulation :
 Créer un outil de simulation en Scala qui émule le comportement des capteurs.
 L'outil générera des données basées sur des scénarios prédéfinis pour le poids détecté.

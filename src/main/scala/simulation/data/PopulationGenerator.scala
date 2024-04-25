@@ -1,7 +1,8 @@
+package simulation.data
+
 import scala.util.Random
 import simulation.model._
 
-package simulation.data
 
 object SensorSimulator extends App {
   val random = new Random()

@@ -1,6 +1,7 @@
 import scala.util.Random
-package simulation.data
 import simulation.model._
+
+package simulation.data
 
 object SensorSimulator extends App {
   val random = new Random()
@@ -16,11 +17,13 @@ object SensorSimulator extends App {
   val simulatedData = simulateSensorData(sensorId)
 
   println(s"Simulated Data: $simulatedData")
-
-
+}
 
 object PopulationGenerator {
-  def generateInitialPopulation(numPeople: Int, railLength: Double): List[Person] = {
+  def generateInitialPopulation(
+      numPeople: Int,
+      railLength: Double
+  ): List[Person] = {
     val random = new Random()
     (1 to numPeople).map { id =>
       val position = random.nextDouble() * railLength

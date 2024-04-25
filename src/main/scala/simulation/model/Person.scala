@@ -1,3 +1,7 @@
 package simulation.model
 
-class Person(val id: Int, var position: Double, val speed: Double)
+case class Person(id: Int, position: Double, speed: Double) {
+  def updatePosition(newPosition: Double): Person = {
+    copy(position = newPosition)
+  }
+}

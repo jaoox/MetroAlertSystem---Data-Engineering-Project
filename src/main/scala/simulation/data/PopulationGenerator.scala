@@ -3,33 +3,18 @@ package simulation.data
 import scala.util.Random
 import simulation.model._
 
-
-object SensorSimulator extends App {
-  val random = new Random()
-
-  def generateWeight(): Double = 5 + random.nextDouble() * (500 - 5)
-
-  def simulateSensorData(sensorId: String): SensorData = {
-    val weight = generateWeight()
-    SensorData(sensorId, System.currentTimeMillis(), weight)
-  }
-
-  val sensorId = "sensor-001"
-  val simulatedData = simulateSensorData(sensorId)
-
-  println(s"Simulated Data: $simulatedData")
-}
-
 object PopulationGenerator {
-  def generateInitialPopulation(
-      numPeople: Int,
-      railLength: Double
-  ): List[Person] = {
+  def generateInitialPopulation(numPeople: Int, railLength: Double, scenario: String): List[Person] = {
     val random = new Random()
+    val initialSpeed = scenario match {
+      case "rush_hour" => 5.0 // Vitesse élevée pendant les heures de pointe
+      case "off_peak" => 3.0 // Vitesse plus lente en période creuse
+      case _ => 4.0 // Vitesse moyenne par défaut
+    }
     (1 to numPeople).map { id =>
+      // Position aléatoire le long des rails de métro
       val position = random.nextDouble() * railLength
-      val speed = random.nextDouble() * 5
-      new Person(id, position, speed)
+      new Person(id, position, initialSpeed)
     }.toList
   }
 }

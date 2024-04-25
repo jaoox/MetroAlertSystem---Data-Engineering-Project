@@ -3,12 +3,12 @@ package simulation.movement
 import simulation.model._
 
 object PersonMovement {
-  // Mettre à jour la position de chaque personne en fonction de la vitesse
-  def updatePersonPosition(people: List[Person]): List[Person] = {
-    val updatedPeople = people.map { person =>
-      val newPosition = person.position + person.speed
-      new Person(person.id, newPosition, person.speed) // Créer une nouvelle personne avec la position mise à jour
+  def updatePersonPosition(people: List[Person], railLength: Double, trafficDensity: Double): List[Person] = {
+    people.map { person =>
+      val newPosition = person.position + person.speed * trafficDensity
+      //Position reste dans les limites des rails de métro
+      val boundedPosition = if (newPosition < 0) 0 else if (newPosition > railLength) railLength else newPosition
+      person.updatePosition(boundedPosition)
     }
-    updatedPeople
   }
 }

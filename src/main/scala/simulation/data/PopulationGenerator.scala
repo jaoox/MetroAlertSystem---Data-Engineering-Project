@@ -1,6 +1,6 @@
-<<<<<<< HEAD
-// SensorSimulator.scala
 import scala.util.Random
+package simulation.data
+import simulation.model._
 
 object SensorSimulator extends App {
   val random = new Random()
@@ -16,11 +16,8 @@ object SensorSimulator extends App {
   val simulatedData = simulateSensorData(sensorId)
 
   println(s"Simulated Data: $simulatedData")
-=======
-package simulation.data
 
-import scala.util.Random
-import simulation.model._
+
 
 object PopulationGenerator {
   def generateInitialPopulation(numPeople: Int, railLength: Double): List[Person] = {
@@ -31,5 +28,4 @@ object PopulationGenerator {
       new Person(id, position, speed)
     }.toList
   }
->>>>>>> ab7f020 (classes et fontions)
 }

@@ -1,21 +1,36 @@
 package simulation
+
+import simulation.model._
+import simulation.data._
+import simulation.movement._
+import simulation.management._
+import simulation.traffic._
+
 object Main {
   def main(args: Array[String]): Unit = {
-    // Initialisation des données
-    val population = data.PopulationGenerator.generateInitialPopulation()
+    val numPeople = 100
+    val railLength = 1000.0
 
-    // Boucle de simulation
-    while (/* Condition de fin de simulation */) {
-      // Mise à jour du déplacement des personnes
-      movement.PersonMovement.updatePersonPosition(population)
+    var population = PopulationGenerator.generateInitialPopulation(numPeople, railLength)
 
-      // Gestion des événements (ajout/suppression de personnes, etc.)
-      management.PopulationManagement.managePopulation(population)
+    var iteration = 0
+    while (iteration < 10) {
+      println(s"Iteration $iteration:")
+      // MAJ position des personnes en fonction de leur vitesse de déplacement
+      population = PersonMovement.updatePersonPosition(population)
 
-      // Modélisation des conditions de trafic
-      traffic.TrafficConditions.updateTrafficConditions()
+      // Gérer l'ajout/suppression de personnes en fonction des événements de la simulation
+      population = PopulationManagement.managePopulation(population)
 
-      // Autres actions...
+      // Trafic le long des rails de métro
+      TrafficConditions.updateTrafficConditions()
+
+      // Afficher les positions des personnes pour cette itération
+      population.foreach { person =>
+        println(s"Person ${person.id}: Position = ${person.position}, Speed = ${person.speed}")
+      }
+
+      iteration += 1
     }
   }
 }

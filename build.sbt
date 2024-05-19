@@ -1,6 +1,6 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "2.12.17"
+ThisBuild / scalaVersion := "2.11.12"
 
 libraryDependencies ++= Seq(
   "org.apache.flink" %% "flink-scala" % "1.14.4",

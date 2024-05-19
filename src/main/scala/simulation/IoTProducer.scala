@@ -16,7 +16,7 @@ object IoTProducer {
     val producer = new KafkaProducer[String, String](props)
     val topic = "iot-data"
 
-    val jsonSource = Source.fromFile("path/to/your/json/file.json")
+    val jsonSource = Source.fromFile("path/to/your/json/simulation_data.json")
     val jsonData = jsonSource.getLines.mkString
 
     val dataList = jsonData.parseJson.convertTo[List[Map[String, Any]]]

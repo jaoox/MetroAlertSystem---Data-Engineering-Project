@@ -198,7 +198,7 @@
         "platform": {
             "name": "jvm",
             "config": {
-                "home": "/Users/anas/Library/Java/JavaVirtualMachines/corretto-11.0.22/Contents/Home",
+                "home": "/Users/anas/Library/Caches/Coursier/arc/https/github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11%252B28/OpenJDK11-jdk_x64_mac_hotspot_11_28.tar.gz/jdk-11+28/Contents/Home",
                 "options": [
                     "-Duser.dir=/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/project"
                 ]
@@ -207,7 +207,7 @@
                 
             ],
             "runtimeConfig": {
-                "home": "/Users/anas/Library/Java/JavaVirtualMachines/corretto-11.0.22/Contents/Home",
+                "home": "/Users/anas/Library/Caches/Coursier/arc/https/github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11%252B28/OpenJDK11-jdk_x64_mac_hotspot_11_28.tar.gz/jdk-11+28/Contents/Home",
                 "options": [
                     "-Duser.dir=/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/project"
                 ]

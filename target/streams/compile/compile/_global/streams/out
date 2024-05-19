@@ -1,0 +1,31 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/IoTProducer.scala:6:8: not found: object spray[0m
+[0m[[0m[31merror[0m] [0m[0mimport spray.json._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/IoTProducer.scala:7:8: not found: object DefaultJsonProtocol[0m
+[0m[[0m[31merror[0m] [0m[0mimport DefaultJsonProtocol._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/IoTProducer.scala:22:29: value parseJson is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m    val dataList = jsonData.parseJson.convertTo[List[Map[String, Any]]][0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/alert/AlertHandler.scala:7:8: not found: object spray[0m
+[0m[[0m[31merror[0m] [0m[0mimport spray.json._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/alert/AlertHandler.scala:8:8: not found: object DefaultJsonProtocol[0m
+[0m[[0m[31merror[0m] [0m[0mimport DefaultJsonProtocol._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/alert/AlertHandler.scala:33:10: value parseJson is not a member of String[0m
+[0m[[0m[31merror[0m] [0m[0m    data.parseJson.convertTo[IoTData][0m
+[0m[[0m[31merror[0m] [0m[0m         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/analysis/DataAnalysis.scala:3:19: object spark is not a member of package org.apache[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.sql.SparkSession[0m
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/analysis/DataAnalysis.scala:4:8: not found: object spray[0m
+[0m[[0m[31merror[0m] [0m[0mimport spray.json._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/analysis/DataAnalysis.scala:5:8: not found: object DefaultJsonProtocol[0m
+[0m[[0m[31merror[0m] [0m[0mimport DefaultJsonProtocol._[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/src/main/scala/simulation/analysis/DataAnalysis.scala:11:17: not found: value SparkSession[0m
+[0m[[0m[31merror[0m] [0m[0m    val spark = SparkSession.builder.appName("IoT Data Analysis").getOrCreate()[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0m10 errors found[0m

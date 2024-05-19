@@ -19,7 +19,10 @@ object MetroDataProcessing {
 
     val properties = new Properties()
     properties.setProperty("bootstrap.servers", "localhost:9092")
-    properties.setProperty("group.id", "metro-group")
+    properties.setProperty("group.id", "test-group")
+    properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+    properties.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+    properties.setProperty("auto.offset.reset", "earliest")
 
     val kafkaConsumer = new FlinkKafkaConsumer[String]("metro-data", new SimpleStringSchema(), properties)
 

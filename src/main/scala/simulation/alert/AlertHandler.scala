@@ -5,11 +5,18 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import java.util.Properties
 import spray.json._
-import DefaultJsonProtocol._
+import spray.json.DefaultJsonProtocol._
 
+// Définissez IoTData ici pour éviter les conflits d'importation
 case class IoTData(timestamp: Long, station: String, personId: Int, hour: Int, position: Double, speed: Double)
 
+object IoTJsonProtocol extends DefaultJsonProtocol {
+  implicit val iotDataFormat = jsonFormat6(IoTData)
+}
+
 object AlertHandler {
+  import IoTJsonProtocol._
+
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 

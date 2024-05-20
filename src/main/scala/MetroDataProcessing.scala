@@ -1,5 +1,6 @@
-import org.apache.flink.api.scala._
-import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
+package simulation
+
+import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import java.util.Properties

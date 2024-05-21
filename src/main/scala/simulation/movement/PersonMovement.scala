@@ -1,14 +1,17 @@
 package simulation.movement
 
-import simulation.model._
+import simulation.model.Person
 
 object PersonMovement {
-  def updatePersonPosition(people: List[Person], railLength: Double, trafficDensity: Double): List[Person] = {
-    people.map { person =>
-      val newPosition = person.position + person.speed * trafficDensity
-      //Position reste dans les limites des rails de métro
-      val boundedPosition = if (newPosition < 0) 0 else if (newPosition > railLength) railLength else newPosition
-      person.updatePosition(boundedPosition)
+  def updatePersonPosition(person: Person, trafficDensity: Double): Person = {
+    val newSpeed = person.speed * (1 - trafficDensity)
+    val newPosition = person.position + newSpeed
+    person.copy(position = newPosition, speed = newSpeed)
+  }
+
+  def updatePopulationPositions(population: List[Person], trafficDensity: Double): List[Person] = {
+    population.map { person =>
+      updatePersonPosition(person, trafficDensity)
     }
   }
 }

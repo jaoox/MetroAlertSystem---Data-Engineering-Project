@@ -4,8 +4,10 @@ import simulation.data.PopulationGenerator
 import simulation.traffic.TrafficConditions
 import simulation.movement.PersonMovement
 import simulation.serialization.JsonSerializer
+import com.typesafe.scalalogging.LazyLogging
 
-object Main {
+object Main extends LazyLogging {
+
   def serializeData(population: List[Person], station: String, iteration: Int, scenario: String): List[GeneratedData] = {
     val currentHour = iteration % 24
 
@@ -21,28 +23,35 @@ object Main {
     var allSerializedData: List[GeneratedData] = List()
 
     scenarios.foreach { scenario =>
-      println(s"Simulation for scenario: $scenario")
+      logger.info(s"Simulation for scenario: $scenario")
       var population = PopulationGenerator.generateInitialPopulation(numPeople, railLength, scenario)
 
       val numIterations = 10
       (1 to numIterations).foreach { iteration =>
-        println(s"Iteration $iteration:")
+        logger.info(s"Iteration $iteration:")
         val trafficDensity = TrafficConditions.updateTrafficConditions()
-        population = PersonMovement.updatePersonPosition(population, railLength, trafficDensity)
+        population = PersonMovement.updatePopulationPositions(population, trafficDensity)
 
         val str = "Ligne " + iteration
         val serializedData = serializeData(population, str, iteration, scenario)
         allSerializedData = allSerializedData ++ serializedData
 
         serializedData.foreach { data =>
-          println(s"Timestamp: ${data.timestamp}, Station: ${data.station}, PersonId: ${data.personId}, Hour: ${data.hour}, Position: ${data.position}, Speed: ${data.speed}, Scenario: ${data.scenario}")
+          logger.info(s"Timestamp: ${data.timestamp}, Station: ${data.station}, PersonId: ${data.personId}, Hour: ${data.hour}, Position: ${data.position}, Speed: ${data.speed}, Scenario: ${data.scenario}")
         }
       }
     }
 
     val json = JsonSerializer.serializeList(allSerializedData)
-    val fileName = "simulation_data.json"
+    val fileName = "src/main/scala/resources/simulation_data.json" // Ensure correct path
     val file = new java.io.PrintWriter(fileName)
-    try { file.write(json) } finally { file.close() }
+    try {
+      file.write(json)
+      logger.info(s"Data successfully written to $fileName")
+    } catch {
+      case e: Exception => logger.error(s"Error writing to file $fileName", e)
+    } finally {
+      file.close()
+    }
   }
 }

@@ -3,8 +3,8 @@ ThisBuild / scalaVersion := "2.12.10"
 
 libraryDependencies ++= Seq(
   "org.apache.flink" %% "flink-scala" % "1.14.4",
-  "org.apache.flink" %% "flink-streaming-scala" % "1.14.4",
-  "org.apache.flink" %% "flink-connector-kafka" % "1.12.2",
+  "org.apache.flink" %% "flink-streaming-scala" % "1.19.0",
+  "org.apache.flink" %% "flink-connector-kafka" % "1.19.0",
   "org.apache.kafka" %% "kafka" % "2.7.0",
   "org.apache.kafka" % "kafka-clients" % "2.7.0",
   "org.json4s" %% "json4s-native" % "3.6.7",

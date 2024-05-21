@@ -1,3 +1,6 @@
-[0m[[0m[0mdebug[0m] [0m[0mnot up to date. inChanged = true, force = false[0m
-[0m[[0m[0mdebug[0m] [0m[0mUpdating ProjectRef(uri("file:/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/project/"), "data_engenieur_project-build")...[0m
-[0m[[0m[0mdebug[0m] [0m[0mDone updating ProjectRef(uri("file:/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/project/"), "data_engenieur_project-build")[0m
+[0m[[0m[33mwarn[0m] [0m[0msbt-bloop_2.12_1.0-1.5.17-sources.jar no longer exists at \Users\anas\Library\Caches\Coursier\v1\https\repo1.maven.org\maven2\ch\epfl\scala\sbt-bloop_2.12_1.0\1.5.17\sbt-bloop_2.12_1.0-1.5.17-sources.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mnot up to date. inChanged = false, force = false[0m
+[0m[[0m[0mdebug[0m] [0m[0mUpdating ProjectRef(uri("file:/C:/Users/joaob/OneDrive/Área%20de%20Trabalho/Projet%20Data%20Eng/Data_Engenieur_project/project/"), "data_engenieur_project-build")...[0m
+[0m[[0m[0minfo[0m] [0m[0mFetching artifacts of [0m
+[0m[[0m[0minfo[0m] [0m[0mFetched artifacts of [0m
+[0m[[0m[0mdebug[0m] [0m[0mDone updating ProjectRef(uri("file:/C:/Users/joaob/OneDrive/Área%20de%20Trabalho/Projet%20Data%20Eng/Data_Engenieur_project/project/"), "data_engenieur_project-build")[0m

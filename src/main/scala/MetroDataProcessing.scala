@@ -16,6 +16,7 @@ object MetroDataProcessing {
   def main(args: Array[String]): Unit = {
     implicit val typeInfoString: TypeInformation[String] = TypeInformation.of(classOf[String])
 
+    // Use the local stream execution environment
     val env = StreamExecutionEnvironment.getExecutionEnvironment
 
     val properties = new Properties()
@@ -31,10 +32,17 @@ object MetroDataProcessing {
 
     val dataStream = stream.map { record =>
       implicit val formats = DefaultFormats
-      parse(record).extract[MetroData]
+      println(s"Received record: $record")
+      val data = parse(record).extract[MetroData]
+      println(s"Parsed data: $data")
+      data
     }
 
-    val alertStream = dataStream.filter(data => data.scenario == "off" && data.position < 300)
+    val alertStream = dataStream.filter { data =>
+      val isAlert = data.scenario == "off" && data.position < 300
+      if (isAlert) println(s"Alert triggered for data: $data")
+      isAlert
+    }
 
     alertStream.print()
 

@@ -1,1 +1,1 @@
-["simulation.KafkaDataProducer","simulation.MetroDataProcessing","simulation.alert.AlertHandler","simulation.analysis.DataAnalysis","simulation.model.Main"]
+["simulation.KafkaDataProducer","simulation.MetroDataProcessing","simulation.alert.AlertHandler","simulation.analysis.DataAnalysis","simulation.analysis.SparkAnalysis","simulation.model.Main"]

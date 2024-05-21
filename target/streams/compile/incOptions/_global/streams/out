@@ -1,0 +1,53 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/target/scala-2.12/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/target/scala-2.12/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTJsonProtocol$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	KafkaDataProducer$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PersonMovement$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	MetroData.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	MetroLine.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	TrafficConditions.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTData.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	DataAnalysis.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Rail.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Person.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	AlertHandler$$anon$1$$anon$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	DataAnalysis$$typecreator4$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	AlertMessage$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	DataAnalysis$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	TrafficConditions$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	MetroDataProcessing.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	KafkaDataProducer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PopulationGenerator.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTData$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	AlertMessage.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Person$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTData$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTJsonProtocol$AnyJsonFormat$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	AlertHandler$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTJsonProtocol$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTJsonProtocol.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	AlertHandler.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	MetroData$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	JsonSerializer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	JsonSerializer$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTProducer.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GeneratedData.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	AlertHandler$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PersonMovement.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PopulationGenerator$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PopulationManagement.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	MetroDataProcessing$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTJsonProtocol$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTProducer$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTJsonProtocol.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	GeneratedData$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PopulationManagement$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IoTData.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /Users/anas/Doc/Data_Engineering/Data_Engenieur_project/target/scala-2.12/classes.bak[0m

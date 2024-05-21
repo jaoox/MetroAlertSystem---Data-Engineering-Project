@@ -10,7 +10,7 @@ object JsonSerializer {
 
   def serializeList(dataList: List[GeneratedData]): String = {
     dataList.map { data =>
-      s"""{"timestamp":${data.timestamp},"station":"${data.station}","personId":${data.personId},"hour":${data.hour},"position":${data.position},"speed":${data.speed}}"""
+      s"""{"timestamp":${data.timestamp},"station":"${data.station}","personId":${data.personId},"hour":${data.hour},"position":${data.position},"speed":${data.speed}, "scenario":"${data.scenario}"}"""
     }.mkString("[", ",", "]")
   }
 

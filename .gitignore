@@ -1,0 +1,9 @@
+# Ignore Metals and Bloop directories
+.metals/
+.bloop/
+
+# Ignore target directory
+target/
+
+# Ignore any log files
+*.log

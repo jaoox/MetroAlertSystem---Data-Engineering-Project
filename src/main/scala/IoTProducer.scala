@@ -38,10 +38,10 @@ object IoTJsonProtocol extends DefaultJsonProtocol {
   implicit val listMapFormat: JsonFormat[List[Map[String, Any]]] = listFormat[Map[String, Any]]
 }
 
-object IoTProducer {
-  import IoTJsonProtocol._
+import IoTJsonProtocol._
 
-  def parseIoTData(jsonData: String): List[Map[String, Any]] = {
+object IoTProducer {
+  def parseData(jsonData: String): List[Map[String, Any]] = {
     jsonData.parseJson.convertTo[List[Map[String, Any]]]
   }
 }

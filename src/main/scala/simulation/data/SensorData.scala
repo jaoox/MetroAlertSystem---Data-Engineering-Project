@@ -42,12 +42,8 @@ object PopulationGenerator {
     (1 to numPeople).map { id =>
       // Position aléatoire le long des rails de métro
       val position = random.nextDouble() * railLength
-<<<<<<< HEAD
       val speed = random.nextDouble() * 5
       Person(id, position, speed)
-=======
-      new Person(id, position, initialSpeed)
->>>>>>> f550f1c73e835b3f7c4af04b30249978da3faa2c
     }.toList
   }
 }

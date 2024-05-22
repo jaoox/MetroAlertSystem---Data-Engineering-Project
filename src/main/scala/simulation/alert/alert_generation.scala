@@ -15,22 +15,22 @@ object DataAlertGenerator {
   import MetroDataProtocol._
 
   def main(args: Array[String]): Unit = {
-    // Chemin absolu pour charger les données depuis le fichier JSON
-    val dataPath = "/Data_Engineering/Data_Engenieur_project/data_generation.json"
+    // Correct relative path to load data from the JSON file
+    val dataPath = "src/main/scala/resources/data_generation.json"
     val source = Source.fromFile(dataPath)
     val lines = try source.mkString finally source.close()
 
-    // Convertir le JSON en liste de MetroData
+    // Convert the JSON to a list of MetroData
     val data = lines.parseJson.convertTo[List[MetroData]]
 
-    // Filtrer les données pour trouver les situations d'alerte
+    // Filter data to find alert situations
     val alerts = data.filter(d => d.position > 800 && d.speed > 5)
 
-    // Convertir les alertes filtrées en JSON
+    // Convert filtered alerts to JSON
     val jsonAlerts = alerts.toJson.prettyPrint
 
-    // Chemin absolu pour sauvegarder les alertes filtrées dans un nouveau fichier JSON
-    val alertPath = "/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/data_generation.json"
+    // Correct relative path to save the filtered alerts to a new JSON file
+    val alertPath = "src/main/scala/resources/data_alert.json"
     val file = new File(alertPath)
     val pw = new PrintWriter(file)
     try {

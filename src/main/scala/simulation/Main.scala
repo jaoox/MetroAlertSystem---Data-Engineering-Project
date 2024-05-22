@@ -30,7 +30,7 @@ object Main extends App {
   val jsonData = randomDataList.toJson.prettyPrint
 
   // Écrire le JSON dans un fichier au dossier racine du projet
-  val file = new File("data_generation.json")  // Création d'un fichier à la racine du projet
+  val file = new File("src/main/scala/resources/data_generation.json")  // Création d'un fichier à la racine du projet
   val pw = new PrintWriter(file)
   pw.write(jsonData)
   pw.close()

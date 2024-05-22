@@ -10,6 +10,7 @@ object AlertHandler {
     val data = record.parseJson.convertTo[MetroData]
     if (data.scenario == "off" && data.position < 300) {
       println(s"Alert triggered for data: $data")
+      // Additional alert handling logic can be implemented here
     } else {
       println(s"Received data: $data")
     }

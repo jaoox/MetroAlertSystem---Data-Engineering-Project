@@ -24,16 +24,25 @@ object Main extends App {
   }
 
   // Générer 2000 données aléatoires
-  val randomDataList = (1 to 2000).map(_ => generateRandomMetroData)
+  val randomDataList = (1 to 2000).map(_ => generateRandomMetroData).toList
+
+  // Split data into alerts and non-alerts for testing
+  val (alerts, nonAlerts) = randomDataList.partition(data => data.position > 800 && data.speed > 5)
 
   // Convertir la liste des données en JSON
   val jsonData = randomDataList.toJson.prettyPrint
 
   // Écrire le JSON dans un fichier au dossier racine du projet
-  val file = new File("src/main/scala/resources/data_generation.json")  // Création d'un fichier à la racine du projet
+  val file = new File("src/main/scala/resources/data_generation.json")
   val pw = new PrintWriter(file)
   pw.write(jsonData)
   pw.close()
 
   println(s"Data generated and written to ${file.getAbsolutePath}")
+
+  // Process alerts
+  alerts.foreach { alert =>
+    val record = alert.toJson.toString()
+    AlertHandler.handleAlert(record)
+  }
 }

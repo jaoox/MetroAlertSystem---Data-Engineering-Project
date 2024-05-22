@@ -6,6 +6,8 @@ import java.util.Properties
 import org.apache.kafka.clients.consumer.{ConsumerConfig, KafkaConsumer}
 import scala.collection.JavaConverters._
 import simulation.model.MetroData
+import spray.json._
+import DefaultJsonProtocol._
 
 object SparkDataProcessing {
 

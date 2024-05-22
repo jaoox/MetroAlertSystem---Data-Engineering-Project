@@ -1,37 +1,34 @@
 package simulation.analysis
 
-import org.apache.spark.sql.{SparkSession, DataFrame}
-import org.apache.spark.sql.functions._
+import org.apache.spark.sql.SparkSession
+import org.json4s._
+import org.json4s.jackson.JsonMethods._
+import simulation.model.MetroData
 
 object SparkAnalysis {
-
   def main(args: Array[String]): Unit = {
-    val spark = SparkSession.builder()
-      .appName("Spark Analysis")
-      .getOrCreate()
+    val spark = SparkSession.builder.appName("Spark Analysis").getOrCreate()
+    import spark.implicits._
 
-    val dataPath = "simulation_data.json"
-    val dataDF = loadData(spark, dataPath)
+    val kafkaData = spark.readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", "localhost:9092")
+      .option("subscribe", "metro-data")
+      .load()
 
-    val resultDF = performAnalysis(dataDF)
-    resultDF.show()
-    
-    saveResults(resultDF, "analysis_results.json")
+    implicit val formats = DefaultFormats
 
-    spark.stop()
-  }
+    val metroData = kafkaData.selectExpr("CAST(value AS STRING)")
+      .as[String]
+      .map(record => parse(record).extract[MetroData])
 
-  def loadData(spark: SparkSession, path: String): DataFrame = {
-    spark.read.json(path)
-  }
+    val alertStream = metroData.filter(data => data.scenario == "off" && data.position < 300)
 
-  def performAnalysis(dataDF: DataFrame): DataFrame = {
-    dataDF.groupBy("scenario", "hour")
-      .agg(avg("speed").as("average_speed"), count("personId").as("count"))
-      .orderBy("scenario", "hour")
-  }
+    val query = alertStream.writeStream
+      .outputMode("append")
+      .format("console")
+      .start()
 
-  def saveResults(df: DataFrame, path: String): Unit = {
-    df.write.mode("overwrite").json(path)
+    query.awaitTermination()
   }
 }

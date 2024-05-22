@@ -14,8 +14,8 @@ object KafkaDataProducer {
 
     val producer = new KafkaProducer[String, String](props)
 
-    // Chemin vers le fichier JSON
-    val filePath = "src/main/resources/simulation_data.json"
+    // Utilisation du chemin absolu
+    val filePath = "/Users/anas/Doc/Data_Engineering/Data_Engenieur_project/simulation_data.json"
     val source = Source.fromFile(filePath)
     val data = source.getLines().toList
     source.close()

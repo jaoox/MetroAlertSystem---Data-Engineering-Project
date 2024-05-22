@@ -1,5 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(show libraryDependencies, None, None)[0m
-[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: libraryDependencies[0m
-[0m[[0m[0minfo[0m] [0m[0m* org.scala-lang:scala-library:2.13.13[0m
-[0m[[0m[0minfo[0m] [0m[0m* org.apache.flink:flink-scala:1.19.0[0m
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(idea-shell, None, None)[0m

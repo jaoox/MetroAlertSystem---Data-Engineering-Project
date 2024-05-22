@@ -1,24 +1,18 @@
 package simulation.serialization
 
-import simulation.model.AlertMessage
-import simulation.model.GeneratedData
+import spray.json._
+import DefaultJsonProtocol._
+import simulation.model.{GeneratedData, Person}
 
-object JsonSerializer {
-  def serialize(alertMessage: AlertMessage): String = {
-    s"""{"timestamp":${alertMessage.timestamp},"location":"${alertMessage.location}","description":"${alertMessage.description}"}"""
+object JsonSerializer extends DefaultJsonProtocol {
+  implicit val personFormat = jsonFormat3(Person)
+  implicit val generatedDataFormat = jsonFormat7(GeneratedData)
+
+  def serializeList(data: List[GeneratedData]): String = {
+    data.toJson.prettyPrint
   }
 
-  def serializeList(dataList: List[GeneratedData]): String = {
-    dataList.map { data =>
-      s"""{"timestamp":${data.timestamp},"station":"${data.station}","personId":${data.personId},"hour":${data.hour},"position":${data.position},"speed":${data.speed}, "scenario":"${data.scenario}"}"""
-    }.mkString("[", ",", "]")
-  }
-
-  def deserialize(jsonString: String): Option[AlertMessage] = {
-    val pattern = """\{"timestamp":(\d+),"location":"([^"]+)","description":"([^"]+)"\}""".r
-    jsonString match {
-      case pattern(timestamp, location, description) => Some(AlertMessage(timestamp.toLong, location, description))
-      case _ => None
-    }
+  def deserializeList(jsonStr: String): List[GeneratedData] = {
+    jsonStr.parseJson.convertTo[List[GeneratedData]]
   }
 }

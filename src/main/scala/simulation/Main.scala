@@ -2,8 +2,9 @@ package simulation
 
 import simulation.model.{MetroData, MetroDataProtocol}
 import spray.json._
-import java.io._
+import java.io.{File, PrintWriter}
 import scala.util.Random
+import scala.util.Using
 
 object Main extends App {
   import MetroDataProtocol._
@@ -21,15 +22,17 @@ object Main extends App {
   }
 
   val randomDataList = (1 to 2000).map(_ => generateRandomMetroData).toList
-
   val jsonData = randomDataList.toJson.prettyPrint
-
   val file = new File("src/main/scala/resources/data_generation.json")
-  val pw = new PrintWriter(file)
-  try {
-    pw.write(jsonData)
-    println(s"Data generated and written to ${file.getAbsolutePath}")
-  } finally {
-    pw.close()
+
+  writeFile(file, jsonData)
+
+  def writeFile(file: File, data: String): Unit = {
+    Using(new PrintWriter(file)) { pw =>
+      pw.write(data)
+      println(s"Data generated and written to ${file.getAbsolutePath}")
+    }.recover {
+      case e: Exception => println(s"An error occurred: ${e.getMessage}")
+    }
   }
 }

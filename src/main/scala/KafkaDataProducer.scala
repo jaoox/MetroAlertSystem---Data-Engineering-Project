@@ -5,11 +5,15 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import spray.json._
 import simulation.model.{MetroData, MetroDataProtocol}
 import scala.util.Random
+import org.apache.log4j.{Level, Logger}
 
 object KafkaDataProducer {
   import MetroDataProtocol._
 
   def main(args: Array[String]): Unit = {
+    val logger = Logger.getLogger(getClass.getName)
+    logger.setLevel(Level.INFO)
+
     val props = new Properties()
     props.put("bootstrap.servers", "localhost:9092")
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
@@ -21,19 +25,19 @@ object KafkaDataProducer {
     val random = new Random()
     val stations = Seq("Station1", "Station2", "Station3", "Station4", "Station5")
 
-    val data = (1 to 200).map { _ =>
-      val timestamp = System.currentTimeMillis()
-      val station = stations(random.nextInt(stations.length))
-      val personId = random.nextInt(100)
-      val position = random.nextDouble() * 1000
-      val speed = random.nextDouble() * 10
-      val scenario = if (random.nextBoolean()) "normal" else "alert"
-      MetroData(timestamp, station, personId, 10, position, speed, scenario)
-    }
-
-    data.foreach { recordData =>
-      val record = new ProducerRecord[String, String](topic, recordData.toJson.toString())
+    (1 to 200).foreach { _ =>
+      val data = MetroData(
+        timestamp = System.currentTimeMillis(),
+        station = stations(random.nextInt(stations.length)),
+        personId = random.nextInt(100),
+        hour = random.nextInt(24),
+        position = random.nextDouble() * 1000,
+        speed = random.nextDouble() * 10,
+        scenario = if (random.nextBoolean()) "normal" else "alert"
+      )
+      val record = new ProducerRecord[String, String](topic, data.toJson.toString())
       producer.send(record)
+      logger.info(s"Message sent: $data")
     }
 
     producer.close()

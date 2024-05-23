@@ -7,6 +7,8 @@ scalaVersion := "2.12.10"
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "3.1.2",
   "org.apache.spark" %% "spark-sql" % "3.1.2",
+  "org.apache.spark" %% "spark-streaming" % "3.1.2",
+  "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.1.2",
   "com.typesafe.akka" %% "akka-actor" % "2.6.4",
   "com.typesafe.akka" %% "akka-stream" % "2.6.4",
   "com.typesafe.akka" %% "akka-http" % "10.1.11",
@@ -15,7 +17,8 @@ libraryDependencies ++= Seq(
   "org.apache.flink" %% "flink-scala" % "1.12.0",
   "org.apache.flink" %% "flink-streaming-scala" % "1.12.0",
   "io.spray" %% "spray-json" % "1.3.6",
-  "org.scala-lang.modules" %% "scala-xml" % "1.3.0"
+  "org.scala-lang.modules" %% "scala-xml" % "1.3.0",
+  "org.apache.kafka" % "kafka-clients" % "2.7.0"
 )
 
 mainClass in Compile := Some("simulation.Main")

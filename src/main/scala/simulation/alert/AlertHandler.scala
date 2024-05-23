@@ -24,11 +24,21 @@ object AlertHandler {
     val consumer = new KafkaConsumer[String, String](props)
     consumer.subscribe(java.util.Collections.singletonList("metro-data"))
 
-    while (true) {
-      val records = consumer.poll(1000).asScala
-      for (record <- records) {
-        handleAlert(record.value(), logger)
+    // Contrôle de la boucle avec une variable
+    var running = true
+    try {
+      while (running) {
+        val records = consumer.poll(1000).asScala
+        for (record <- records) {
+          handleAlert(record.value(), logger)
+          // Vous pourriez ajouter une condition pour mettre `running` à false si nécessaire
+        }
+        // Simuler une condition d'arrêt
+        if (shouldStop()) running = false
       }
+    } finally {
+      consumer.close()  // Assurez-vous de fermer le consommateur proprement
+      logger.info("Consumer closed")
     }
   }
 
@@ -39,5 +49,11 @@ object AlertHandler {
     } else {
       logger.info(s"Received data: $data")
     }
+  }
+
+  // Une fonction pour déterminer quand arrêter le consommateur
+  def shouldStop(): Boolean = {
+    // Ajoutez votre logique ici pour déterminer quand arrêter
+    false
   }
 }

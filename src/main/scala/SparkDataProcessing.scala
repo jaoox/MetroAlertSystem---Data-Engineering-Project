@@ -2,48 +2,54 @@ package simulation
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
-import java.util.Properties
-import org.apache.kafka.clients.consumer.{ConsumerConfig, KafkaConsumer}
-import scala.collection.JavaConverters._
-import simulation.model.MetroData
-import org.apache.log4j.{Level, Logger}
+import org.apache.spark.sql.types._
 
 object SparkDataProcessing {
-
   def main(args: Array[String]): Unit = {
-    val logger = Logger.getLogger(getClass.getName)
-    logger.setLevel(Level.INFO)
-
     val spark = SparkSession.builder
       .appName("Spark Data Processing")
       .master("local[*]")
+      .config("spark.mongodb.output.uri", "mongodb://localhost:27017/sparkData.metroData")
       .getOrCreate()
 
     import spark.implicits._
 
-    val props = new Properties()
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
-    props.put(ConsumerConfig.GROUP_ID_CONFIG, "spark-processing-group")
-    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
+    // Define the schema according to your JSON data
+    val schema = new StructType()
+      .add("hour", IntegerType)
+      .add("personId", IntegerType)
+      .add("position", DoubleType)
+      .add("scenario", StringType)
+      .add("speed", DoubleType)
+      .add("station", StringType)
+      .add("timestamp", LongType)
 
-    val consumer = new KafkaConsumer[String, String](props)
-    consumer.subscribe(java.util.Arrays.asList("metro-data"))
+    val df = spark
+      .readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", "localhost:9092")
+      .option("subscribe", "metro-data")
+      .option("startingOffsets", "earliest")
+      .load()
+      .selectExpr("CAST(value AS STRING) as value")
+      .select(from_json($"value", schema).as("data"))
+      .select("data.*")
 
-    while (true) {
-      val records = consumer.poll(1000).asScala
-      val data = records.map(record => parseData(record.value())).toSeq
-      val df = spark.createDataFrame(data)
-      df.createOrReplaceTempView("metro_data")
+    val alertDF = df.filter($"scenario" === "alert" && $"position" < 300)
 
-      val alertDF = spark.sql("SELECT * FROM metro_data WHERE scenario = 'off' AND position < 300")
-      alertDF.show()
-    }
-  }
+    val query = alertDF.writeStream
+      .outputMode("append")
+      .format("console")
+      .start()
 
-  def parseData(record: String): MetroData = {
-    implicit val formats = org.json4s.DefaultFormats
-    org.json4s.jackson.JsonMethods.parse(record).extract[MetroData]
+    df.writeStream
+      .foreachBatch { (batchDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row], _: Long) =>
+        batchDF.write
+          .format("mongo")
+          .mode("append")
+          .save()
+      }
+      .start()
+      .awaitTermination()
   }
 }

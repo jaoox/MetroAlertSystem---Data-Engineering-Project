@@ -18,7 +18,8 @@ libraryDependencies ++= Seq(
   "org.apache.flink" %% "flink-streaming-scala" % "1.12.0",
   "io.spray" %% "spray-json" % "1.3.6",
   "org.scala-lang.modules" %% "scala-xml" % "1.3.0",
-  "org.apache.kafka" % "kafka-clients" % "2.7.0"
+  "org.apache.kafka" % "kafka-clients" % "2.7.0",
+  "org.mongodb.spark" %% "mongo-spark-connector" % "2.4.1"
 )
 
 mainClass in Compile := Some("simulation.Main")

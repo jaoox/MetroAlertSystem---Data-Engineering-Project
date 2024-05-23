@@ -25,7 +25,7 @@ object KafkaDataProducer {
     val random = new Random()
     val stations = Seq("Station1", "Station2", "Station3", "Station4", "Station5")
 
-    (1 to 200).foreach { _ =>
+    (1 to 1000).foreach { _ =>
       val data = MetroData(
         timestamp = System.currentTimeMillis(),
         station = stations(random.nextInt(stations.length)),

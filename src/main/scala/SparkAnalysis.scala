@@ -1,21 +1,27 @@
 package simulation.analysis
 
 import org.apache.spark.sql.SparkSession
-import org.json4s._
-import org.json4s.jackson.JsonMethods._
-import simulation.model.MetroData
-import org.apache.log4j.{Level, Logger}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types._
 
 object SparkAnalysis {
   def main(args: Array[String]): Unit = {
-    val logger = Logger.getLogger(getClass.getName)
-    logger.setLevel(Level.INFO)
-
     val spark = SparkSession.builder
       .appName("Spark Analysis")
       .master("local[*]")
       .getOrCreate()
+
     import spark.implicits._
+
+    // Define the schema according to your JSON data
+    val schema = new StructType()
+      .add("hour", IntegerType)
+      .add("personId", IntegerType)
+      .add("position", DoubleType)
+      .add("scenario", StringType)
+      .add("speed", DoubleType)
+      .add("station", StringType)
+      .add("timestamp", LongType)
 
     val kafkaData = spark.readStream
       .format("kafka")
@@ -23,13 +29,12 @@ object SparkAnalysis {
       .option("subscribe", "metro-data")
       .load()
 
-    implicit val formats = DefaultFormats
+    val metroData = kafkaData
+      .selectExpr("CAST(value AS STRING) as value")
+      .select(from_json($"value", schema).as("data"))
+      .select("data.*")
 
-    val metroData = kafkaData.selectExpr("CAST(value AS STRING)")
-      .as[String]
-      .map(record => parse(record).extract[MetroData])
-
-    val alertStream = metroData.filter(data => data.scenario == "off" && data.position < 300)
+    val alertStream = metroData.filter($"scenario" === "alert" && $"position" < 300)
 
     val query = alertStream.writeStream
       .outputMode("append")

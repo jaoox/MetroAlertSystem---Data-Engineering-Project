@@ -1,10 +1,10 @@
 package simulation.alert
 
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.Trigger
 import spray.json._
 import simulation.model.{MetroData, MetroDataProtocol}
-import org.apache.kafka.clients.consumer.KafkaConsumer
-import java.util.Properties
-import scala.collection.JavaConverters._
 import org.apache.log4j.{Level, Logger}
 
 object AlertHandler {
@@ -14,46 +14,43 @@ object AlertHandler {
     val logger = Logger.getLogger(getClass.getName)
     logger.setLevel(Level.INFO)
 
-    val props = new Properties()
-    props.put("bootstrap.servers", "localhost:9092")
-    props.put("group.id", "alert-handler-group")
-    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-    props.put("auto.offset.reset", "earliest")
+    // Créer une session Spark
+    val spark = SparkSession.builder()
+      .appName("AlertHandler")
+      .config("spark.master", "local")
+      .getOrCreate()
 
-    val consumer = new KafkaConsumer[String, String](props)
-    consumer.subscribe(java.util.Collections.singletonList("metro-data"))
+    import spark.implicits._
 
-    // Contrôle de la boucle avec une variable
-    var running = true
-    try {
-      while (running) {
-        val records = consumer.poll(1000).asScala
-        for (record <- records) {
-          handleAlert(record.value(), logger)
-          // Vous pourriez ajouter une condition pour mettre `running` à false si nécessaire
-        }
-        // Simuler une condition d'arrêt
-        if (shouldStop()) running = false
-      }
-    } finally {
-      consumer.close()  // Assurez-vous de fermer le consommateur proprement
-      logger.info("Consumer closed")
-    }
-  }
+    // Configuration de Kafka
+    val kafkaBootstrapServers = "localhost:9092"
+    val kafkaTopic = "metro-data"
 
-  def handleAlert(record: String, logger: Logger): Unit = {
-    val data = record.parseJson.convertTo[MetroData]
-    if (data.scenario == "off" && data.position < 300) {
-      logger.warn(s"Alert triggered for data: $data")
-    } else {
-      logger.info(s"Received data: $data")
-    }
-  }
+    // Lire les données de Kafka
+    val kafkaDF = spark.readStream
+      .format("kafka")
+      .option("kafka.bootstrap.servers", kafkaBootstrapServers)
+      .option("subscribe", kafkaTopic)
+      .option("startingOffsets", "earliest")
+      .load()
 
-  // Une fonction pour déterminer quand arrêter le consommateur
-  def shouldStop(): Boolean = {
-    // Ajoutez votre logique ici pour déterminer quand arrêter
-    false
+    // Convertir les données de Kafka en chaîne de caractères
+    val kafkaData = kafkaDF.selectExpr("CAST(value AS STRING)").as[String]
+
+    // Convertir les données JSON en DataFrame de MetroData
+    val metroDataDF = kafkaData.map(record => record.parseJson.convertTo[MetroData]).toDF()
+
+    // Filtrer les données pour générer des alertes
+    val alertDF = metroDataDF.filter($"scenario" === "off" && $"position" < 300)
+
+    // Écrire les alertes dans la console (ou dans un autre sink comme HDFS, S3, etc.)
+    val query = alertDF.writeStream
+      .outputMode("append")
+      .format("console")
+      .trigger(Trigger.ProcessingTime("10 seconds"))
+      .start()
+
+    // Attendre la fin de l'exécution
+    query.awaitTermination()
   }
 }

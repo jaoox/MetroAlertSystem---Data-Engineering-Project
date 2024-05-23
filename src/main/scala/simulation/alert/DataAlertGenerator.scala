@@ -1,9 +1,11 @@
 package simulation
 
+import org.apache.spark.sql.{SparkSession, DataFrame}
+import org.apache.spark.sql.functions._
 import scala.io.Source
 import spray.json._
 import DefaultJsonProtocol._
-import java.io._
+import java.nio.file.{Files, Paths}
 
 object DataAlertGenerator {
   case class MetroData(hour: Int, personId: Int, position: Double, scenario: String, speed: Double, station: String, timestamp: Long)
@@ -15,29 +17,36 @@ object DataAlertGenerator {
   import MetroDataProtocol._
 
   def main(args: Array[String]): Unit = {
-    // Load data from the JSON file
+    // Initialiser SparkSession
+    val spark = SparkSession.builder()
+      .appName("DataAlertGenerator")
+      .config("spark.master", "local")
+      .getOrCreate()
+
+    import spark.implicits._
+
+    // Charger les données depuis le fichier JSON
     val dataPath = "src/main/scala/resources/data_generation.json"
-    val source = Source.fromFile(dataPath)
-    val lines = try source.mkString finally source.close()
+    val jsonString = new String(Files.readAllBytes(Paths.get(dataPath)))
+    val data = jsonString.parseJson.convertTo[List[MetroData]]
 
-    // Convert JSON to a list of MetroData
-    val data = lines.parseJson.convertTo[List[MetroData]]
+    // Convertir les données en DataFrame
+    val df = spark.createDataset(data).toDF()
 
-    // Filter data to find alert situations
-    val alerts = data.filter(d => d.position > 800 && d.speed > 5)
+    // Filtrer les données pour trouver les situations d'alerte
+    val alertDF = df.filter($"position" > 800 && $"speed" > 5)
 
-    // Convert filtered alerts to JSON
-    val jsonAlerts = alerts.toJson.prettyPrint
+    // Convertir les alertes filtrées en JSON
+    val jsonAlerts = alertDF.toJSON.collect().mkString("[", ",", "]")
 
-    // Save the filtered alerts to a new JSON file
+    // Chemin vers le fichier d'alertes
     val alertPath = "src/main/scala/resources/data_alert.json"
-    val file = new File(alertPath)
-    val pw = new PrintWriter(file)
-    try {
-      pw.write(jsonAlerts)
-      println(s"Alert data written to ${file.getAbsolutePath}")
-    } finally {
-      pw.close()
-    }
+
+    // Écrire les alertes filtrées dans un nouveau fichier JSON
+    Files.write(Paths.get(alertPath), jsonAlerts.getBytes)
+    println(s"Alert data written to $alertPath")
+
+    // Arrêter la session Spark
+    spark.stop()
   }
 }

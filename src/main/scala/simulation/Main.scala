@@ -2,7 +2,7 @@ package simulation
 
 import simulation.model.{MetroData, MetroDataProtocol}
 import spray.json._
-import java.io._
+import java.nio.file.{Files, Paths}
 import scala.util.Random
 
 object Main extends App {
@@ -24,12 +24,9 @@ object Main extends App {
 
   val jsonData = randomDataList.toJson.prettyPrint
 
-  val file = new File("src/main/scala/resources/data_generation.json")
-  val pw = new PrintWriter(file)
-  try {
-    pw.write(jsonData)
-    println(s"Data generated and written to ${file.getAbsolutePath}")
-  } finally {
-    pw.close()
-  }
+  val filePath = "src/main/scala/resources/data_generation.json"
+
+  // Écrire les données générées dans le fichier JSON
+  Files.write(Paths.get(filePath), jsonData.getBytes)
+  println(s"Data generated and written to $filePath")
 }

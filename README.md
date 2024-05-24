@@ -19,3 +19,6 @@ Capteurs IoT : Utilisation de capteurs IoT pour la détection de personnes sur l
 Scala et Programmation Fonctionnelle : Tout le code sera écrit en Scala en suivant les principes de la programmation fonctionnelle, pour garantir la fiabilité et la maintenabilité du système.
 Traitement en Temps Réel : Utilisation de technologies de traitement des données en temps réel telles que Apache Kafka pour assurer une réactivité maximale du système.
 Gestion des Alertes : Développement d'un système robuste de gestion des alertes pour garantir que les interventions de secours sont effectuées rapidement et efficacement.
+
+
+![Metro Data Flow](images/metro_data_flow.png)
